@@ -2,18 +2,11 @@
   (:use compojure.core)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
-            [hiccup.page :as page]))
-
-(defn index []
-  "Home page"
-  (page/html5
-    [:head
-     [:title "Carol Wu"]]
-    [:body
-     [:div {:id "content"} "Hi Carol's Empty Homepage"]])) 
+            [carol-gallery.controllers.home :as home]
+            ))
 
 (defroutes app-routes
-  (GET "/" [] (index))
+  (GET "/" [] (home/index))
   (route/resources "/")
   (route/not-found "Not Found"))
 
