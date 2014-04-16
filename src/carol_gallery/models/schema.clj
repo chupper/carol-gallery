@@ -1,6 +1,6 @@
 (ns carol-gallery.models.schema
   (:require [carol-gallery.models.db :refer :all]
-            [clojure.java.jdc :as sql]))
+            [clojure.java.jdbc :as sql]))
 
 (defn create-gallery-table []
  (sql/with-connection db
