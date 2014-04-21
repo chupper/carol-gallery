@@ -2,8 +2,7 @@
   (:require [carol-gallery.views.layout :as layout]))
 
 (defn gallery-item [item]
-  [:a.list-group-item
-   [:span (:name item)]])
+  [:a.list-group-item {:href (str "/gallery-admin/edit/" (:id item))} (:name item)])
 
 (defn gallery-select
   "creates the gallery menus from the seq given"
@@ -18,8 +17,11 @@
     "Gallery Admin"
     [:div.content-main
      [:div.row
-      [:div.col-md-4
-      [:h3 "Galleries"] (gallery-select galleries)]
+      [:div.col-md-2
+       [:h4.page-header "Galleries"]
+       (gallery-select galleries)
+       [:div.list-group
+        [:a.list-group-item {:href "/gallery-admin/new"} "Add New"]]]
       [:div.col-md-8 
-       [:h3 "This is the admin page"]]]]))
+       [:h4.page-header "Gallery Administration"]]]]))
 
