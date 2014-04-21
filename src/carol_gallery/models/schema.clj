@@ -2,14 +2,12 @@
   (:require [carol-gallery.models.db :refer :all]
             [clojure.java.jdbc :as jdbc]))
 
-(defn drop-all-tables []
+(defn drop-all-tables [ ]
   (jdbc/db-do-commands db
                        (jdbc/drop-table-ddl :picture)
                        (jdbc/drop-table-ddl :gallery)))
 
-(defn create-all-tables []
-  (do (create-gallery-table)
-      (create-picture-table)))
+
 
 (defn create-gallery-table []
   (jdbc/db-do-commands db
@@ -28,3 +26,8 @@
                          [:id "varchar(32) PRIMARY KEY"]
                          [:filename "varchar(100)"]
                          [:blurb "varchar(512)"])))
+
+(defn create-all-tables []
+  (do  
+    (create-gallery-table) 
+    (create-picture-table)))
