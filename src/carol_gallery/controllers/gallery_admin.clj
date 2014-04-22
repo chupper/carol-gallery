@@ -8,3 +8,11 @@
   []
   (let [galleries (gallery/read-galleries)]
     (view/gallery-admin galleries)))
+
+(defn edit
+  "gallery admin edit page"
+  [id]
+  (let [galleries (gallery/read-galleries)]
+    (view/gallery-edit galleries {:name "test"} '({:id 1} {:id 2} {:id 3} {:id 4}))
+    )
+  )

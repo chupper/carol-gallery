@@ -1,3 +1,13 @@
 body {
     padding-top: 50px;
 }
+
+.content-main {
+    padding-top: 40px 15px; 
+    text-align: center;
+}
+
+.placeholder {
+    height: 180px;
+    width: 171px;
+}

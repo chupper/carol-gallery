@@ -9,6 +9,7 @@
 (defroutes app-routes
   (GET "/" [] (home/index))
   (GET "/gallery-admin" [_] (g-admin/main))
+  (GET "/gallery-admin/edit/:id" [id] (g-admin/edit id))
   (route/resources "/")
   (route/not-found "Not Found"))
 
