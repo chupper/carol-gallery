@@ -25,6 +25,15 @@
       [:div.col-md-8 
        [:h4.page-header "Gallery Administration"]]]]))
 
+
+(defn generate-thumbnails [image]
+  [:div.col-xs-6.col-md-3 
+   [:a.thumbnail {:href "#"}
+    [:img.placeholder {:data-src "test.jpg" :alt "hi"}]]])
+
+(defn gallery-images-edit [images]
+  (map generate-thumbnails images))
+
 (defn gallery-edit
   "Has the view with galleries pictures in the list"
   [galleries gallery images]
@@ -40,15 +49,21 @@
       [:div.col-md-8 
        [:h4.page-header "Gallery Administration"]
        (gallery-images-edit images)
-       ]]] 
-    )
-  )
+       ]]]))
 
-(defn gallery-images-edit [images]
-  (map generate-thumbnails images))
+(defn gallery-new
+  "Creates a new gallery"
+  [galleries]
+  (layout/main
+    (str "Create Gallery")
+    [:div.content-main
+     [:div.row
+      [:div.col-md-2
+       [:h4.page-header "Galleries"]
+       (gallery-select galleries)
+       [:div.list-group
+        [:a.list-group-item {:href "/gallery-admin/new"} "Add New"]]]
+      [:div.col-md-8 
+       [:h4.page-header "Create new gallery"]
 
-(defn generate-thumbnails [image]
-  [:div.col-xs-6.col-md-3 
-   [:a.thumbnail {:href "#"}
-    [:img.placeholder {:data-src "test.jpg" :alt "hi"}]]])
-
+       ]]]))

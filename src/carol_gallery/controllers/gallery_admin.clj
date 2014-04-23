@@ -9,10 +9,14 @@
   (let [galleries (gallery/read-galleries)]
     (view/gallery-admin galleries)))
 
-(defn edit
+(defn edit-gallery
   "gallery admin edit page"
   [id]
   (let [galleries (gallery/read-galleries)]
-    (view/gallery-edit galleries {:name "test"} '({:id 1} {:id 2} {:id 3} {:id 4}))
-    )
-  )
+    (view/gallery-edit galleries {:name "test"} '({:id 1} {:id 2} {:id 3} {:id 4}))))
+
+(defn new-gallery
+  "Create gallery"
+  []
+  (let [galleries (gallery/read-galleries)]
+    (view/gallery-new galleries)))
