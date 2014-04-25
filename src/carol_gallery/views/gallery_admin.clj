@@ -1,5 +1,7 @@
 (ns carol-gallery.views.gallery-admin
-  (:require [carol-gallery.views.layout :as layout]))
+  (:require [carol-gallery.views.layout :as layout]
+            [hiccup.form :refer :all]
+            ))
 
 (defn gallery-item [item]
   [:a.list-group-item {:href (str "/gallery-admin/edit/" (:id item))} (:name item)])
@@ -24,7 +26,6 @@
         [:a.list-group-item {:href "/gallery-admin/new"} "Add New"]]]
       [:div.col-md-8 
        [:h4.page-header "Gallery Administration"]]]]))
-
 
 (defn generate-thumbnails [image]
   [:div.col-xs-6.col-md-3 
@@ -51,6 +52,17 @@
        (gallery-images-edit images)
        ]]]))
 
+(defn form-group [label control-type id & control-class]
+  [:div.form-group
+   [:label {:for id} label]
+   [:input.form-control (conj {:id id :type control-type} (first control-class))]])
+
+(defn form-group-textarea [label control-type id rows]
+  [:div.form-group
+   [:label {:for id} label]
+   [:textarea.form-control {:id id :type control-type :rows rows}]])
+
+
 (defn gallery-new
   "Creates a new gallery"
   [galleries]
@@ -65,5 +77,9 @@
         [:a.list-group-item {:href "/gallery-admin/new"} "Add New"]]]
       [:div.col-md-8 
        [:h4.page-header "Create new gallery"]
-
+       (form-to [:post "/gallery-admin/new"]
+                   (form-group "Name" "text" "name") 
+                   (form-group-textarea "Description" "text-area" "description" 4)
+                   [:button.btn.btn-default {:type "submit"} "Submit"]
+                     )
        ]]]))

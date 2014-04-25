@@ -1,7 +1,6 @@
 (ns carol-gallery.controllers.gallery-admin
   (:require [carol-gallery.views.gallery-admin :as view]
-            [carol-gallery.models.gallery :as gallery]
-            ))
+            [carol-gallery.models.gallery :as gallery]))
 
 (defn main
   "gallery admin main page"
@@ -20,3 +19,9 @@
   []
   (let [galleries (gallery/read-galleries)]
     (view/gallery-new galleries)))
+
+(defn post-new-gallery
+  "Creates the new gallery and redirects to the new page"
+  [name description]
+  (str "test" name description )
+  )

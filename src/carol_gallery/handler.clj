@@ -11,6 +11,7 @@
   (GET "/gallery-admin" [_] (g-admin/main))
   (GET "/gallery-admin/edit/:id" [id] (g-admin/edit-gallery id))
   (GET "/gallery-admin/new" [] (g-admin/new-gallery))
+  (POST "/gallery-admin/new" [name description] (g-admin/post-new-gallery name description))
   (route/resources "/")
   (route/not-found "Not Found"))
 
