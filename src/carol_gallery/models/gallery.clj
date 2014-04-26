@@ -9,3 +9,11 @@
 
 (defn read-galleries []
   (jdbc/query db ["SELECT * from gallery"]))  
+
+(defn read-gallery-from-id [id]
+  (let [gallery (jdbc/query db ["SELECT * from gallery WHERE id = ?" id])]
+    (first gallery)))
+
+(defn get-galleryid-from-name
+  [gallery-name]
+  (jdbc/query db ["SELECT id FROM gallery WHERE name = ?" gallery-name]))

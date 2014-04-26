@@ -1,7 +1,7 @@
 (ns carol-gallery.controllers.gallery-admin
   (:require [carol-gallery.views.gallery-admin :as view]
-            [carol-gallery.models.gallery :as gallery]))
-
+            [carol-gallery.models.gallery :as gallery]
+            [ring.util.response :as resp])) 
 (defn main
   "gallery admin main page"
   []
@@ -11,8 +11,10 @@
 (defn edit-gallery
   "gallery admin edit page"
   [id]
-  (let [galleries (gallery/read-galleries)]
-    (view/gallery-edit galleries {:name "test"} '({:id 1} {:id 2} {:id 3} {:id 4}))))
+  (println id)
+  (let [galleries (gallery/read-galleries)
+        gallery (gallery/read-gallery-from-id (Integer. id))]
+    (view/gallery-edit galleries gallery '({:id 1} {:id 2} {:id 3} {:id 4}))))
 
 (defn new-gallery
   "Create gallery"
@@ -21,7 +23,7 @@
     (view/gallery-new galleries)))
 
 (defn post-new-gallery
-  "Creates the new gallery and redirects to the new page"
+  "Creates the new gallery and redirects to the gallery edit page, checks for duplicate names"
   [name description]
-  (str "test" name description )
-  )
+  (let [new-gallery (first (gallery/add-gallery-record {:name name :description description}))]
+    (resp/redirect (str "/gallery-admin/edit/" (new-gallery :id)))))

@@ -7,13 +7,11 @@
                        (jdbc/drop-table-ddl :picture)
                        (jdbc/drop-table-ddl :gallery)))
 
-
-
 (defn create-gallery-table []
   (jdbc/db-do-commands db
                        (jdbc/create-table-ddl
                          :gallery
-                         [:id "varchar(32) PRIMARY KEY"]
+                         [:id "serial PRIMARY KEY"]
                          [:name "varchar(100)"]
                          [:description "varchar(2000)"]
                          [:pictureid "varchar(32)"]
@@ -23,7 +21,7 @@
   (jdbc/db-do-commands db
                        (jdbc/create-table-ddl 
                          :picture
-                         [:id "varchar(32) PRIMARY KEY"]
+                         [:id "serial PRIMARY KEY"]
                          [:galleryid "varchar(32)"]
                          [:filename "varchar(100)"]
                          [:thumbnail "bytea"]

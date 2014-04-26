@@ -3,6 +3,16 @@
             [hiccup.form :refer :all]
             ))
 
+(defn form-group [label control-type id value & control-class]
+  [:div.form-group
+   [:label {:for id} label]
+   [:input.form-control (conj {:id id :name id :type control-type :value value} (first control-class))]])
+
+(defn form-group-textarea [label control-type id value rows]
+  [:div.form-group
+   [:label {:for id} label]
+   [:textarea.form-control {:name id :id id :type control-type :rows rows } value]])
+ 
 (defn gallery-item [item]
   [:a.list-group-item {:href (str "/gallery-admin/edit/" (:id item))} (:name item)])
 
@@ -48,20 +58,14 @@
        [:div.list-group
         [:a.list-group-item {:href "/gallery-admin/new"} "Add New"]]]
       [:div.col-md-8 
-       [:h4.page-header "Gallery Administration"]
+       [:h4.page-header "Gallery Edit"]
+       [:p  (str "This is the edit page for gallery: " (gallery :name))]
+       (form-to [:post "/gallery-admin/edit"]
+                (form-group "Name" "text" "name" (gallery :name)) 
+                (form-group-textarea "Description" "text-area" "description" (gallery :description) 4)
+                [:button.btn.btn-default {:type "submit"} "Edit"]) 
        (gallery-images-edit images)
        ]]]))
-
-(defn form-group [label control-type id & control-class]
-  [:div.form-group
-   [:label {:for id} label]
-   [:input.form-control (conj {:id id :type control-type} (first control-class))]])
-
-(defn form-group-textarea [label control-type id rows]
-  [:div.form-group
-   [:label {:for id} label]
-   [:textarea.form-control {:id id :type control-type :rows rows}]])
-
 
 (defn gallery-new
   "Creates a new gallery"
@@ -78,8 +82,6 @@
       [:div.col-md-8 
        [:h4.page-header "Create new gallery"]
        (form-to [:post "/gallery-admin/new"]
-                   (form-group "Name" "text" "name") 
-                   (form-group-textarea "Description" "text-area" "description" 4)
-                   [:button.btn.btn-default {:type "submit"} "Submit"]
-                     )
-       ]]]))
+                   (form-group "Name" "text" "name" "") 
+                   (form-group-textarea "Description" "text-area" "description" "" 4)
+                   [:button.btn.btn-default {:type "submit"} "Create"])]]]))
