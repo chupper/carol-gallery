@@ -1,7 +1,6 @@
 (ns carol-gallery.views.gallery-admin
   (:require [carol-gallery.views.layout :as layout]
-            [hiccup.form :refer :all]
-            ))
+            [hiccup.form :refer :all]))
 
 (defn form-group [label control-type id value & control-class]
   [:div.form-group
@@ -12,7 +11,7 @@
   [:div.form-group
    [:label {:for id} label]
    [:textarea.form-control {:name id :id id :type control-type :rows rows } value]])
- 
+
 (defn gallery-item [item]
   [:a.list-group-item {:href (str "/gallery-admin/edit/" (:id item))} (:name item)])
 
@@ -60,12 +59,18 @@
       [:div.col-md-8 
        [:h4.page-header "Gallery Edit"]
        [:p  (str "This is the edit page for gallery: " (gallery :name))]
-       (form-to [:post "/gallery-admin/edit"]
+       (form-to [:post (str "/gallery-admin/edit/" (gallery :id))]
                 (form-group "Name" "text" "name" (gallery :name)) 
                 (form-group-textarea "Description" "text-area" "description" (gallery :description) 4)
                 [:button.btn.btn-default {:type "submit"} "Edit"]) 
-       (gallery-images-edit images)
-       ]]]))
+       [:h4.page-header "Add Image"] 
+       (form-to {:enctype "multipart/form-data"} [:post (str "/gallery-admin/" (gallery :id) "/picture/new")]
+                (form-group "Name" "text" "name" "")
+                (form-group-textarea "Description" "text-area" "description"  "" 2)
+                (form-group "Image File" "file" "file" "")
+                [:button.btn.btn-default {:type "submit"} "Add Image"]) 
+       [:h4.page-header "Images"]
+       (gallery-images-edit images)]]]))
 
 (defn gallery-new
   "Creates a new gallery"
@@ -82,6 +87,6 @@
       [:div.col-md-8 
        [:h4.page-header "Create new gallery"]
        (form-to [:post "/gallery-admin/new"]
-                   (form-group "Name" "text" "name" "") 
-                   (form-group-textarea "Description" "text-area" "description" "" 4)
-                   [:button.btn.btn-default {:type "submit"} "Create"])]]]))
+                (form-group "Name" "text" "name" "") 
+                (form-group-textarea "Description" "text-area" "description" "" 4)
+                [:button.btn.btn-default {:type "submit"} "Create"])]]]))

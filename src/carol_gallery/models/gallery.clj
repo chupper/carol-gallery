@@ -14,6 +14,11 @@
   (let [gallery (jdbc/query db ["SELECT * from gallery WHERE id = ?" id])]
     (first gallery)))
 
+(defn update-gallery-from-id
+  "Updates the gallery"
+  [gallery id]
+  (jdbc/update! db :gallery gallery ["id = ?" (Integer. id)]))
+
 (defn get-galleryid-from-name
   [gallery-name]
   (jdbc/query db ["SELECT id FROM gallery WHERE name = ?" gallery-name]))

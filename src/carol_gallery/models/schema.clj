@@ -26,7 +26,8 @@
                          [:filename "varchar(100)"]
                          [:thumbnail "bytea"]
                          [:content "bytea"]
-                         [:blurb "varchar(512)"])))
+                         [:name "varchar(100)"]
+                         [:description "varchar(512)"])))
 
 (defn create-all-tables []
   (do  

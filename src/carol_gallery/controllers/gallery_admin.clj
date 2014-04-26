@@ -16,6 +16,12 @@
         gallery (gallery/read-gallery-from-id (Integer. id))]
     (view/gallery-edit galleries gallery '({:id 1} {:id 2} {:id 3} {:id 4}))))
 
+(defn post-edit-gallery
+  "Updates the gallery"
+  [id name description]
+  (do (gallery/update-gallery-from-id {:name name :description description} id)
+      (resp/redirect (str "/gallery-admin/edit/" id))))
+
 (defn new-gallery
   "Create gallery"
   []
