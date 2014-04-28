@@ -11,7 +11,6 @@
 (defn edit-gallery
   "gallery admin edit page"
   [id]
-  (println id)
   (let [galleries (gallery/read-galleries)
         gallery (gallery/read-gallery-from-id (Integer. id))]
     (view/gallery-edit galleries gallery '({:id 1} {:id 2} {:id 3} {:id 4}))))
