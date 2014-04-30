@@ -1,6 +1,7 @@
 (ns carol-gallery.controllers.gallery-admin
   (:require [carol-gallery.views.gallery-admin :as view]
             [carol-gallery.models.gallery :as gallery]
+            [carol-gallery.models.picture :as picture]
             [ring.util.response :as resp])) 
 (defn main
   "gallery admin main page"
@@ -12,8 +13,9 @@
   "gallery admin edit page"
   [id]
   (let [galleries (gallery/read-galleries)
-        gallery (gallery/read-gallery-from-id (Integer. id))]
-    (view/gallery-edit galleries gallery '({:id 1} {:id 2} {:id 3} {:id 4}))))
+        gallery (gallery/read-gallery-from-id (Integer. id))
+        pictures (picture/read-pictures-from-galleryid (Integer. id))]
+    (view/gallery-edit galleries gallery pictures)))
 
 (defn post-edit-gallery
   "Updates the gallery"

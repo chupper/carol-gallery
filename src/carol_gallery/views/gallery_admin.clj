@@ -58,7 +58,7 @@
         [:a.list-group-item {:href "/gallery-admin/new"} "Add New"]]]
       [:div.col-md-8 
        [:h4.page-header "Gallery Edit"]
-       [:p  (str "This is the edit page for gallery: " (gallery :name))]
+       [:p (str "This is the edit page for gallery: " (gallery :name))]
        (form-to [:post (str "/gallery-admin/edit/" (gallery :id))]
                 (form-group "Name" "text" "name" (gallery :name)) 
                 (form-group-textarea "Description" "text-area" "description" (gallery :description) 4)

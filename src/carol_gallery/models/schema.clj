@@ -14,7 +14,7 @@
                          [:id "serial PRIMARY KEY"]
                          [:name "varchar(100)"]
                          [:description "varchar(2000)"]
-                         [:pictureid "varchar(32)"]
+                         [:pictureid "int"]
                          )))
 
 (defn create-picture-table []
@@ -22,7 +22,7 @@
                        (jdbc/create-table-ddl 
                          :picture
                          [:id "serial PRIMARY KEY"]
-                         [:galleryid "varchar(32)"]
+                         [:galleryid "int"]
                          [:filename "varchar(100)"]
                          [:thumbnail "bytea"]
                          [:content "bytea"]
