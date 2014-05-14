@@ -7,13 +7,21 @@
           java.awt.geom.AffineTransform
           javax.imageio.ImageIO))
 
+(def thumbnail-width 130)
+
 (defn to-byte-array
   "Converts a file input stream to a byte array." 
   [f] 
-  (with-open [input  (FileInputStream. f)
-              buffer  (ByteArrayOutputStream.)]
+  (with-open [input (FileInputStream. f)
+              buffer (ByteArrayOutputStream.)]
     (clojure.java.io/copy input buffer)
     (.toByteArray buffer)))
+
+(defn buffered-image-to-byte-array
+  [img]
+  (with-open [boas (ByteArrayOutputStream.)]
+    (ImageIO/write img "jpg" baos)
+    (.toByteArray boas)))
 
 (defn scale
   "Scales the image to create a thumbnail" 
@@ -25,10 +33,16 @@
 (defn add-picture-record
   "Adds a new picture record to a gallery"
   [gallery-id picture-bytes picture-name picture-description]
-  (let [picture {:name picture-name
+  (let [image (ImageIO/read picture-bytes)
+        img-width (.getWidth image)
+        img-height (.getHeight image)
+        ratio (/ thumbnail-width img-width)
+        img-thumb (scale image ratio img-width img-height)
+        picture {:name picture-name
                  :description picture-description
                  :galleryid (Integer. gallery-id)
                  :content (to-byte-array picture-bytes)
+                 :thumbnail (buffered-image-to-byte-array img-thumb)
                  }]
     (jdbc/insert! db :picture picture)))
 
