@@ -37,9 +37,11 @@
        [:h4.page-header "Gallery Administration"]]]]))
 
 (defn generate-thumbnails [image]
-  [:div.col-xs-6.col-md-3 
-   [:a.thumbnail {:href "#"}
-    [:img.placeholder {:data-src "test.jpg" :alt "hi"}]]])
+  (let [thumb-url (str "/thumb/" (image :id))
+        alt-text (image :title)] 
+    [:div.col-xs-6.col-md-3 
+      [:a.thumbnail {:href "#"}
+        [:img.placeholder {:src thumb-url :alt alt-text}]]]))
 
 (defn gallery-images-edit [images]
   (map generate-thumbnails images))

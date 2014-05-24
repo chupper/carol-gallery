@@ -7,7 +7,7 @@
           java.awt.geom.AffineTransform
           javax.imageio.ImageIO))
 
-(def thumbnail-width 130)
+(def thumbnail-width 171)
 
 (defn to-byte-array
   "Converts a file input stream to a byte array." 
@@ -20,7 +20,7 @@
 (defn buffered-image-to-byte-array
   [img]
   (with-open [boas (ByteArrayOutputStream.)]
-    (ImageIO/write img "jpg" baos)
+    (ImageIO/write img "jpg" boas)
     (.toByteArray boas)))
 
 (defn scale
@@ -37,7 +37,7 @@
         img-width (.getWidth image)
         img-height (.getHeight image)
         ratio (/ thumbnail-width img-width)
-        img-thumb (scale image ratio img-width img-height)
+        img-thumb (scale image ratio thumbnail-width 188)
         picture {:name picture-name
                  :description picture-description
                  :galleryid (Integer. gallery-id)

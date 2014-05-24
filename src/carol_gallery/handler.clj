@@ -11,6 +11,7 @@
 (defroutes app-routes
   (GET "/" [] (home/index))
   (GET "/picture/:id" [id] (picture/get-picture-response id))
+  (GET "/thumb/:id" [id] (picture/get-thumbnail-response id))
   (GET "/gallery-admin" [_] (g-admin/main))
   (GET "/gallery-admin/edit/:id" [id] (g-admin/edit-gallery id))
   (POST "/gallery-admin/edit/:id" [id name description] (g-admin/post-edit-gallery id name description))
